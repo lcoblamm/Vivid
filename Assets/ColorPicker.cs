@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.IO;
 using UnityEngine.UI;
 
 public class ColorPicker : MonoBehaviour {
     ColorPicker colorpicker;
     private Color myColor;
-
-    public Texture2D texture = new Texture2D(128, 128);
 
     public Renderer rend;
     public Boolean selected = false;
@@ -44,35 +43,32 @@ public class ColorPicker : MonoBehaviour {
         {
 			StartCoroutine(screenGrab());     
         }
-
-		if (showText) {
-			colorInfo.text = "The color is " + myColor.ToString();
-		}
     }
 
 	IEnumerator screenGrab() {
-		Debug.Log ("Entered coroutine");
 		yield return new WaitForEndOfFrame();
 
 		//Takes the texture2D from the Main Camera.
 		Cam = Camera.main;
-		RenderTexture rTex = new RenderTexture(128, 128, 0);
+		RenderTexture rTex = new RenderTexture(800, 400, 24);
 		Cam.targetTexture = rTex;
 		Cam.Render();
-		Texture2D image = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height);
+		RenderTexture.active = rTex;
+		Texture2D image = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height, TextureFormat.RGB24, false);
 		image.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
-		image.Apply();
+		image.Apply(false);
+
+		//byte[] bytes = image.EncodeToPNG();
+		//File.WriteAllBytes ("Users/Lynne/dev/pic.png", bytes);
 		Cam.targetTexture = null;
-		
-		//Set texture to the captured texture2D.
-		texture = image;
 		
 		//Get the mouse position.
 		int x = Mathf.FloorToInt( Input.mousePosition.x ) ;
 		int y = Mathf.FloorToInt( Input.mousePosition.y );
-		
-		myColor = texture.GetPixel(x, y);
-		showText = true;
+
+		Debug.Log("Click:" + x + " " + y);
+		myColor = image.GetPixel(x, y);
+		colorInfo.text = "The color is " + myColor.ToString();
 		//selected = true;
 		//changeColor(); 
 	}
