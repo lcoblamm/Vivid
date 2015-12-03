@@ -50,24 +50,33 @@ public class ColorPicker : MonoBehaviour {
 
 		//Takes the texture2D from the Main Camera.
 		Cam = Camera.main;
-		RenderTexture rTex = new RenderTexture(800, 400, 24);
+		RenderTexture rTex = new RenderTexture(400, 400, 24); //The aspect ratio should match plane's
 		Cam.targetTexture = rTex;
 		Cam.Render();
 		RenderTexture.active = rTex;
 		Texture2D image = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height, TextureFormat.RGB24, false);
 		image.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
 		image.Apply(false);
+        Cam.targetTexture = null;
 
-		//byte[] bytes = image.EncodeToPNG();
-		//File.WriteAllBytes ("Users/Lynne/dev/pic.png", bytes);
-		Cam.targetTexture = null;
-		
-		//Get the mouse position.
-		int x = Mathf.FloorToInt( Input.mousePosition.x ) ;
-		int y = Mathf.FloorToInt( Input.mousePosition.y );
+        //Screenshot for testing purposes (fixed)
+        /*
+        byte[] bytes = image.EncodeToPNG();
+		File.WriteAllBytes ("C:/Users/Alexa/Desktop/pic.png", bytes);
+        */
 
-		Debug.Log("Click:" + x + " " + y);
-		myColor = image.GetPixel(x, y);
+        //Get click position using ray casting
+        RaycastHit hit;
+        Physics.Raycast(Cam.ScreenPointToRay(Input.mousePosition), out hit);
+        Vector2 pixel = hit.textureCoord;
+        pixel.x *= image.width;
+        pixel.y *= image.height;
+        int x = Mathf.FloorToInt(pixel.x);
+        int y = Mathf.FloorToInt(pixel.y);
+
+
+        myColor = image.GetPixel(x, y);
+        
 		colorInfo.text = "The color is " + myColor.ToString();
 		//selected = true;
 		//changeColor(); 

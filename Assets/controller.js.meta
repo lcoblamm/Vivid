@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: 19fe5ebcd872747419004f92a3e5d13f
-timeCreated: 1449031072
+timeCreated: 1449159440
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - movTexture: {fileID: 15200000, guid: b377cdd5ebf1140a29ca40f1ddd421ac, type: 3}
+  - movTexture: {fileID: 15200000, guid: 6049d9f52271e0e41be5cb370789b2a9, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
