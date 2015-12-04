@@ -15,8 +15,47 @@ public class ColorPicker : MonoBehaviour {
 	public Text colorInfo;
 
     //Objects
-    public  GameObject Object01  ;
+    public  GameObject Object01;
     public Camera Cam ;
+
+    //Used to name color
+    struct NamedColor {
+        public string name;
+        public Vector4 rgba;
+        public NamedColor(string n, Vector4 v) {
+            name = n;
+            rgba = v;
+        }
+    };
+
+    NamedColor[] colorList = {
+        //half and full value combinations
+        new NamedColor("maroon", new Vector4(0.5f, 0, 0, 1)),
+        new NamedColor("red", new Vector4(1, 0, 0, 1)),
+        new NamedColor("green", new Vector4(0, 0.5f, 0, 1)),
+        new NamedColor("lime", new Vector4(0, 1, 0, 1)),
+        new NamedColor("navy", new Vector4(0, 0, 0.5f, 1)),
+        new NamedColor("blue", new Vector4(0, 0, 1, 1)),
+        new NamedColor("olive", new Vector4(0.5f, 0.5f, 0, 1)),
+        new NamedColor("yellow", new Vector4(1, 1, 0, 1)),
+        new NamedColor("purple", new Vector4(0.5f, 0, 0.5f, 1)),
+        new NamedColor("fuchsia", new Vector4(1, 0, 1, 1)),
+        new NamedColor("teal", new Vector4(0, 0.5f, 0.5f, 1)),
+        new NamedColor("aqua", new Vector4(0, 1, 1, 1)),
+        
+        //common "reasonable" colors
+        new NamedColor("beige", new Vector4(0.96f, 0.96f, 0.86f, 1)),
+        new NamedColor("tan", new Vector4(0.87f, 0.72f, 0.53f, 1)),
+        new NamedColor("blue violet", new Vector4(0.54f, 0.17f, 0.89f, 1)),
+        new NamedColor("brown", new Vector4(0.65f, 0.2f, 0.2f, 1)),
+        new NamedColor("pink", new Vector4(1, 0.4f, 0.7f, 1)),
+        new NamedColor("yellow green", new Vector4(0.68f, 1, 0.18f, 1)),
+        new NamedColor("lavender", new Vector4(0.9f, 0.9f, 0.98f, 1)),
+        new NamedColor("light blue", new Vector4(0.68f, 0.85f, 0.9f, 1)),
+        new NamedColor("light green", new Vector4(0.56f, 0.93f, 0.56f, 1)),
+        new NamedColor("orange", new Vector4(1, 0.65f, 0, 1))
+    };
+
 
     public void changeColor()
     {
@@ -74,11 +113,35 @@ public class ColorPicker : MonoBehaviour {
         int x = Mathf.FloorToInt(pixel.x);
         int y = Mathf.FloorToInt(pixel.y);
 
-
+        //Get color
         myColor = image.GetPixel(x, y);
-        
-		colorInfo.text = "The color is " + myColor.ToString();
-		//selected = true;
-		//changeColor(); 
-	}
+        //colorInfo.text = "The color is " + myColor.ToString();
+        colorInfo.text = "The closest color is " + getColorName(myColor);
+
+        //selected = true;
+        //changeColor(); 
+    }
+
+    private string getColorName(Color color) {
+        //Check for greyscale first
+        if(Math.Abs(color.r-color.g) + Math.Abs(color.r-color.b) + Math.Abs(color.g-color.b) < 0.1) {
+            return "grey";
+        }
+        //Find closest color
+        //Note distance is not true distance - just used as an approximation
+        double dist;
+        double smallestDist = 4;
+        int smallestIndex = -1;
+        for(int i=0; i<colorList.Length; i++) {
+            dist =
+                (color.r - colorList[i].rgba[0]) * (color.r - colorList[i].rgba[0])
+                + (color.g - colorList[i].rgba[1]) * (color.g - colorList[i].rgba[1])
+                + (color.b - colorList[i].rgba[2]) * (color.b - colorList[i].rgba[2]);
+            if(dist < smallestDist) {
+                smallestDist = dist;
+                smallestIndex = i;
+            }
+        }
+        return colorList[smallestIndex].name;
+    }
 }
