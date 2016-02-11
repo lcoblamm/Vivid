@@ -3,7 +3,8 @@
 var movTexture : MovieTexture;
 
 function Start () {
-    GetComponent.<Renderer>().material.mainTexture = movTexture; movTexture.Play();
+    //GetComponent.<Renderer>().material.mainTexture = movTexture;
+    movTexture.Play();
 }
 
 function Update () {

@@ -59,7 +59,7 @@ public class ColorPicker : MonoBehaviour {
 
     public void changeColor()
     {
-        rend.material.color = Color.Lerp(myColor, Color.white, Time.time);
+        //rend.material.color = Color.Lerp(myColor, Color.white, Time.time);
     }
 
 
@@ -75,7 +75,7 @@ public class ColorPicker : MonoBehaviour {
         //Once color is selected, continue to change frames.
         if (selected)
         {
-            changeColor();
+           changeColor();
         }
 
         if (Input.GetMouseButtonDown(0))
