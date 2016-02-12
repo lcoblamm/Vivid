@@ -46,9 +46,17 @@
 
 				//Modify the color how we want
 				//Colors contain r, g, b, and a values
+
+				/* Transparency + Background Pattern Approach */
+				/*
 				if (col.b/col.r < 0.8 && col.g/col.r < 0.8) { //Thresholds can be adjusted -- lower = more strict
 					col.a = 1 - col.r/(6*(col.r+col.g+col.b)); //The constant in the denominator compresses the alpha range
 				}
+				*/
+
+				/* Mapping attempt for deuteranomalous type */
+				col.b = (col.b + 2 * col.g) / 3;
+				col.g = col.g/2;
 				return col;
 			}
 			ENDCG
