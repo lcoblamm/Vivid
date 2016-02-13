@@ -3,7 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_GreenWeight ("Green Component Weight", Range (1,6)) = 2
+		_GreenWeight ("Green content in blue component", Range (0,3)) = 2
 		_GreenScaling ("Green Scaling", Range(1,3)) = 2
 	}
 	SubShader
@@ -60,7 +60,7 @@
 				*/
 
 				/* Mapping attempt for deuteranomalous type */
-				col.b = (col.b + _GreenWeight * col.g) / (1 + _GreenWeight);
+				col.b = ((3 - _GreenWeight) * col.b + _GreenWeight * col.g) / 3;
 				col.g = col.g/_GreenScaling;
 				return col;
 
