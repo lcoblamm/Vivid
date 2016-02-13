@@ -3,6 +3,8 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		_GreenWeight ("Green Component Weight", Range (1,6)) = 2
+		_GreenScaling ("Green Scaling", Range(1,3)) = 2
 	}
 	SubShader
 	{
@@ -15,6 +17,9 @@
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
+
+			fixed _GreenWeight;
+			fixed _GreenScaling;
 
 			struct appdata
 			{
@@ -55,9 +60,11 @@
 				*/
 
 				/* Mapping attempt for deuteranomalous type */
-				col.b = (col.b + 2 * col.g) / 3;
-				col.g = col.g/2;
+				col.b = (col.b + _GreenWeight * col.g) / (1 + _GreenWeight);
+				col.g = col.g/_GreenScaling;
 				return col;
+
+
 			}
 			ENDCG
 		}
