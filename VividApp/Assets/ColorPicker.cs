@@ -15,10 +15,8 @@ public class ColorPicker : MonoBehaviour {
 	public Text colorInfo;
 
     //Objects
-    public GameObject Object01;
+    public GameObject plane;
     public Camera Cam ;
-	public WebCamTexture mCamera = null ;
-
 
     //Used to name color
     struct NamedColor {
@@ -67,16 +65,9 @@ public class ColorPicker : MonoBehaviour {
 
     // Use this for initialization
     public void Start () {
-        Object01 = GameObject.Find("Plane");
+        plane = GameObject.Find("Plane");
         rend = GetComponent<Renderer>();
 		colorInfo.text = "";
-    
-
-		mCamera = new WebCamTexture ();
-		Object01.GetComponent<Renderer>().material.mainTexture = mCamera;
-		mCamera.Play ();
-	
-	
 	}
 
     // Update is called once per frame
