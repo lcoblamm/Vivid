@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
 		
 		deviceCam = new WebCamTexture();
 		plane.GetComponent<Renderer>().material.mainTexture = deviceCam;
+		plane.transform.localScale = new Vector3 (1, 1, 1);
 		deviceCam.Play();
 	}
 }
