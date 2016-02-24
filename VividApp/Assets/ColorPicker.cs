@@ -68,6 +68,7 @@ public class ColorPicker : MonoBehaviour {
         plane = GameObject.Find("Plane");
         rend = GetComponent<Renderer>();
 		colorInfo.text = "";
+		Camera.main.orthographic =false; //used field of view for zooming
 	}
 
     // Update is called once per frame
@@ -77,6 +78,23 @@ public class ColorPicker : MonoBehaviour {
         {
             changeColor();
         }
+		
+		RaycastHit hit;
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Vector2 pixel = hit.textureCoord;
+		
+		if (Input.GetAxis("Mouse ScrollWheel") > 0 // zoom forward wheel 
+			&& Camera.main.fieldOfView > 2.6f) // makes sure you don't zoom too far in, creates errors
+		{
+			Camera.main.fieldOfView = Camera.main.fieldOfView-5;
+			Camera.main.transform.position = new Vector3((pixel.x*7.5f)-3.5f,10,(pixel.y*7.5f)-3.5f); //converting pixels into x,y,z coords for camera position.
+		}
+		if (Input.GetAxis("Mouse ScrollWheel") < 0) // zoom backwards wheel
+		{
+			Camera.main.fieldOfView = Camera.main.fieldOfView+5;
+			Camera.main.transform.position = new Vector3((pixel.x*5)-2.5f,10,(pixel.y*5)-2.5f);//converting pixels into x,y,z coords for camera position.
+		}
 
         if (Input.GetMouseButtonDown(0))
         {
