@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: 6a068b6dd56ec40c1b99e81fe19f2b91
-timeCreated: 1455662958
+timeCreated: 1456291155
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - plane: {instanceID: 0}
+  - deviceCam: {instanceID: 0}
+  - picButton: {fileID: 11473358, guid: fc5e8511e03034cdfb1c1f874e25464a, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
