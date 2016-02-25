@@ -6,12 +6,11 @@ public class CameraController : MonoBehaviour
 	//Objects
 	public GameObject plane = null;
 	public WebCamTexture deviceCam = null;
-	[SerializeField] private Button picButton = null;
 
 	// Setting up device camera to render to game plane
 	public void Start () {
-		plane = GameObject.Find("Plane");
-		deviceCam = new WebCamTexture();
+		plane = GameObject.Find ("Plane");
+		deviceCam = new WebCamTexture(Screen.width, Screen.height);
 		plane.GetComponent<Renderer>().material.mainTexture = deviceCam;
 		deviceCam.Play();
 	}

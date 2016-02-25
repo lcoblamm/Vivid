@@ -10,12 +10,10 @@ public class ColorPicker : MonoBehaviour {
 
     public Renderer rend;
     public Boolean selected = false;
-	private bool showText = false;
 
 	public Text colorInfo;
 
     //Objects
-    public GameObject plane;
     public Camera Cam ;
 
     //Used to name color
@@ -56,16 +54,8 @@ public class ColorPicker : MonoBehaviour {
         new NamedColor("orange", new Vector4(1, 0.65f, 0, 1))
     };
 
-
-    public void changeColor()
-    {
-        rend.material.color = Color.Lerp(myColor, Color.white, Time.time);
-    }
-
-
     // Use this for initialization
     public void Start () {
-        plane = GameObject.Find("Plane");
         rend = GetComponent<Renderer>();
 		colorInfo.text = "";
 		Camera.main.orthographic =false; //used field of view for zooming
@@ -73,15 +63,8 @@ public class ColorPicker : MonoBehaviour {
 
     // Update is called once per frame
     public void Update () {
-        //Once color is selected, continue to change frames.
-        if (selected)
-        {
-            changeColor();
-        }
-		
 		RaycastHit hit;
         Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		Vector2 pixel = hit.textureCoord;
 		
 		if (Input.GetAxis("Mouse ScrollWheel") > 0 // zoom forward wheel 
