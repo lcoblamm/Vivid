@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.IO;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ColorPicker : MonoBehaviour {
     ColorPicker colorpicker;
@@ -80,7 +81,8 @@ public class ColorPicker : MonoBehaviour {
 			Camera.main.transform.position = new Vector3((pixel.x*5)-2.5f,10,(pixel.y*5)-2.5f);//converting pixels into x,y,z coords for camera position.
 		}
 
-        if (Input.GetMouseButtonDown(0))
+		// Don't want to detect click if it's on other game object
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
 			StartCoroutine(screenGrab());     
         }
