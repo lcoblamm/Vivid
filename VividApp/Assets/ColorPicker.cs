@@ -57,10 +57,8 @@ public class ColorPicker : MonoBehaviour {
 
     // Use this for initialization
     public void Start () {
-		Debug.Log ("In color picker start");
         rend = GetComponent<Renderer>();
 		colorInfo.text = "";
-	//	Camera.main.orthographic =false; //used field of view for zooming
 	}
 
     // Update is called once per frame
