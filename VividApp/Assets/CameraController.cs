@@ -25,17 +25,12 @@ public class CameraController : MonoBehaviour
 
 	public IEnumerator FixAspectRatio() {
 		while (deviceCam.width < 100) {
-			Debug.Log("the width/height values are not yet ready.");
-			Debug.Log( deviceCam.width +" " +deviceCam.height);
 			yield return null;
 		}
 
 		int correctWidth = deviceCam.width;
 		int correctHeight = deviceCam.height;
 		float newWidth = (float)correctWidth / (float)correctHeight;
-		Debug.Log("the width/height values are now meaningful.");
-		Debug.Log( correctWidth +" " +correctHeight);
-		Debug.Log("Changing ratio to : " + newWidth);
 		plane.transform.localScale = new Vector3 (newWidth, 1f, 1f);
 	}
 		
