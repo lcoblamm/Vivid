@@ -44,7 +44,7 @@ public class ColorPicker : MonoBehaviour {
         
         //common "reasonable" colors
         new NamedColor("beige", new Vector4(0.96f, 0.96f, 0.86f, 1)),
-        new NamedColor("tan", new Vector4(0.87f, 0.72f, 0.53f, 1)),
+        //new NamedColor("tan", new Vector4(0.87f, 0.72f, 0.53f, 1)),
         new NamedColor("blue violet", new Vector4(0.54f, 0.17f, 0.89f, 1)),
         new NamedColor("brown", new Vector4(0.65f, 0.2f, 0.2f, 1)),
         new NamedColor("pink", new Vector4(1, 0.4f, 0.7f, 1)),
@@ -69,7 +69,6 @@ public class ColorPicker : MonoBehaviour {
 		
 		 // If there are two touches on the device...
        
-		/*
 		if (Input.touchCount == 2)
         {
             // Store both touches.
@@ -105,25 +104,33 @@ public class ColorPicker : MonoBehaviour {
                 Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 0.1f, 179.9f);
             }
         }
-        */
+
 		// MOUSE WHEEL ZOOM
-		if (Input.GetAxis("Mouse ScrollWheel") > 0 // zoom forward wheel 
-			&& Camera.main.fieldOfView > 2.6f) // makes sure you don't zoom too far in, creates errors
-		{
-			Camera.main.fieldOfView = Camera.main.fieldOfView-5;
-			Camera.main.transform.position = new Vector3((pixel.x*7.5f)-3.5f,10,(pixel.y*7.5f)-3.5f); //converting pixels into x,y,z coords for camera position.
-		}
-		if (Input.GetAxis("Mouse ScrollWheel") < 0) // zoom backwards wheel
-		{
-			Camera.main.fieldOfView = Camera.main.fieldOfView+5;
-			Camera.main.transform.position = new Vector3((pixel.x*5)-2.5f,10,(pixel.y*5)-2.5f);//converting pixels into x,y,z coords for camera position.
-		}
+//		if (Input.GetAxis("Mouse ScrollWheel") > 0 // zoom forward wheel 
+//			&& Camera.main.fieldOfView > 2.6f) // makes sure you don't zoom too far in, creates errors
+//		{
+//			Camera.main.fieldOfView = Camera.main.fieldOfView-5;
+//			Camera.main.transform.position = new Vector3((pixel.x*7.5f)-3.5f,10,(pixel.y*7.5f)-3.5f); //converting pixels into x,y,z coords for camera position.
+//		}
+//		if (Input.GetAxis("Mouse ScrollWheel") < 0) // zoom backwards wheel
+//		{
+//			Camera.main.fieldOfView = Camera.main.fieldOfView+5;
+//			Camera.main.transform.position = new Vector3((pixel.x*5)-2.5f,10,(pixel.y*5)-2.5f);//converting pixels into x,y,z coords for camera position.
+//		}
 
 		// Don't want to detect click if it's on other game object
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+
+#if UNITY_EDITOR
+		if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+		{
+			StartCoroutine(screenGrab());     
+		}
+#elif UNITY_ANDROID
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
         {
 			StartCoroutine(screenGrab());     
         }
+#endif
     }
 
 	IEnumerator screenGrab() {
@@ -137,7 +144,7 @@ public class ColorPicker : MonoBehaviour {
 		RenderTexture.active = rTex;
 		Texture2D image = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height, TextureFormat.RGB24, false);
 		image.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
-		//image.Apply(false);
+		image.Apply(false);
         Cam.targetTexture = null;
 
         //Get click position using ray casting
@@ -154,7 +161,7 @@ public class ColorPicker : MonoBehaviour {
 
         //Get color
 		myColor = image.GetPixel(x,y); 
-		Debug.Log (myColor);
+		Debug.Log ("Pixel RGB: (" + myColor.r * 256 + ", " + myColor.g * 256 + ", " + myColor.b * 256 + ")");
 
         colorInfo.text = "The closest color is " + getColorName(myColor.gamma);
     }
