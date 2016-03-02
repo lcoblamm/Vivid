@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour
 	public GameObject plane = null;
 	public WebCamTexture deviceCam = null;
 	public bool isPicture = false;
+	public Sprite unpressed;
+	public Sprite pressed;
 
 	// Setting up device camera to render to game plane
 	public void Start () {
@@ -15,6 +17,8 @@ public class CameraController : MonoBehaviour
 		plane = GameObject.Find ("Plane");
 		plane.GetComponent<Renderer>().material.mainTexture = deviceCam;
 		deviceCam.Play();
+
+		gameObject.GetComponentInChildren<Button>().image.sprite = unpressed;
 
 		StartCoroutine(FixAspectRatio());
 	}
@@ -38,11 +42,13 @@ public class CameraController : MonoBehaviour
 		// toggles camera on and off
 	public void ToggleCamera() {
 		if (isPicture) {
-				plane.GetComponent<Renderer> ().material.mainTexture = deviceCam;
+			plane.GetComponent<Renderer> ().material.mainTexture = deviceCam;
 			isPicture = false;
+			gameObject.GetComponentInChildren<Button>().image.sprite = unpressed;
 		} else {
 			TakeSnapshot();
 			isPicture = true;
+			gameObject.GetComponentInChildren<Button>().image.sprite = pressed;
 		}
 	}
 
