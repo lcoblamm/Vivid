@@ -68,7 +68,9 @@ public class ColorPicker : MonoBehaviour {
 		Vector2 pixel = hit.textureCoord;
 		
 		 // If there are two touches on the device...
-        if (Input.touchCount == 2)
+       
+		/*
+		if (Input.touchCount == 2)
         {
             // Store both touches.
             Touch touchZero = Input.GetTouch(0);
@@ -103,6 +105,7 @@ public class ColorPicker : MonoBehaviour {
                 Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 0.1f, 179.9f);
             }
         }
+        */
 		// MOUSE WHEEL ZOOM
 		if (Input.GetAxis("Mouse ScrollWheel") > 0 // zoom forward wheel 
 			&& Camera.main.fieldOfView > 2.6f) // makes sure you don't zoom too far in, creates errors
@@ -134,21 +137,26 @@ public class ColorPicker : MonoBehaviour {
 		RenderTexture.active = rTex;
 		Texture2D image = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height, TextureFormat.RGB24, false);
 		image.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
-		image.Apply(false);
+		//image.Apply(false);
         Cam.targetTexture = null;
 
         //Get click position using ray casting
         RaycastHit hit;
         Physics.Raycast(Cam.ScreenPointToRay(Input.mousePosition), out hit);
-        Vector2 pixel = hit.textureCoord;
-        pixel.x *= image.width;
+        
+		Vector2 pixel = hit.textureCoord2 ;
+	
+		pixel.x *= image.width;
         pixel.y *= image.height;
+
         int x = Mathf.FloorToInt(pixel.x);
         int y = Mathf.FloorToInt(pixel.y);
 
         //Get color
-        myColor = image.GetPixel(x, y);
-        colorInfo.text = "The closest color is " + getColorName(myColor);
+		myColor = image.GetPixel(x,y); 
+		Debug.Log (myColor);
+
+        colorInfo.text = "The closest color is " + getColorName(myColor.gamma);
     }
 
     private string getColorName(Color color) {
