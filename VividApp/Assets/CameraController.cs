@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
 	//Objects
 	public GameObject plane = null;
-	public WebCamTexture deviceCam = null;
+	public static WebCamTexture deviceCam = null;
 	public bool isPicture = false;
 	public Sprite unpressed;
 	public Sprite pressed;
@@ -42,16 +42,17 @@ public class CameraController : MonoBehaviour
 		// toggles camera on and off
 	public void ToggleCamera() {
 		if (isPicture) {
-			plane.GetComponent<Renderer> ().material.mainTexture = deviceCam;
+			deviceCam.Play();
 			isPicture = false;
 			gameObject.GetComponentInChildren<Button>().image.sprite = unpressed;
 		} else {
-			TakeSnapshot();
+			deviceCam.Pause();
 			isPicture = true;
 			gameObject.GetComponentInChildren<Button>().image.sprite = pressed;
 		}
 	}
 
+	// TODO LYNNE: Possibly remove if we're sticking with raycast workaround
 	public void TakeSnapshot() {
 		Texture2D snap = new Texture2D (deviceCam.width, deviceCam.height);
 		snap.SetPixels (deviceCam.GetPixels());

@@ -138,17 +138,22 @@ public class ColorPicker : MonoBehaviour {
 
 		//Takes the texture2D from the Main Camera.
 		Cam = Camera.main;
-		int width = Cam.pixelWidth;
-		int height = Cam.pixelHeight;
-		// TODO Lynne: check on aspect ratio here - should come from camera??
-		RenderTexture rTex = new RenderTexture(400, 400, 24); 
-		Cam.targetTexture = rTex;
-		Cam.Render();
-		RenderTexture.active = rTex;
-		Texture2D image = new Texture2D(width, height, TextureFormat.RGB24, false);
-		image.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-		image.Apply(false);
-        Cam.targetTexture = null;
+		WebCamTexture deviceCam = CameraController.deviceCam;
+		int width = deviceCam.width;
+		int height = deviceCam.height;
+//		RenderTexture rTex = new RenderTexture(width, height, 24); 
+//		Cam.targetTexture = rTex;
+//		Cam.Render();
+//		RenderTexture.active = rTex;
+//		Texture2D image = new Texture2D(width, height, TextureFormat.RGB24, false);
+//		// applies active render texture to image
+//		image.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+//		image.Apply(false);
+//        Cam.targetTexture = null;
+
+		Texture2D image = new Texture2D (width, height);	
+		image.SetPixels (deviceCam.GetPixels());
+		image.Apply ();
 
         //Get click position using ray casting
         RaycastHit hit;
@@ -170,7 +175,7 @@ public class ColorPicker : MonoBehaviour {
 		Debug.Log ("Pixel: (" + x + "," + y + ")");
 		//Get color
 		myColor = image.GetPixel(x,y); 
-
+		rend.material.mainTexture = image;
 
 		Debug.Log ("Pixel RGB: (" + myColor.r * 256 + ", " + myColor.g * 256 + ", " + myColor.b * 256 + ")");
 
