@@ -59,6 +59,8 @@ public class ColorPicker : MonoBehaviour {
     public void Start () {
         rend = GetComponent<Renderer>();
 		colorInfo.text = "";
+		colorInfo.color = Color.white;
+		
 	}
 
     // Update is called once per frame
@@ -90,15 +92,15 @@ public class ColorPicker : MonoBehaviour {
             if (Camera.main.orthographic)
             {
                 // ... change the orthographic size based on the change in distance between the touches.
-                Camera.main.orthographicSize += deltaMagnitudeDiff * -1.7f;
+                Camera.main.orthographicSize += deltaMagnitudeDiff * -0.2f;
 
                 // Make sure the orthographic size never drops below zero.
-                Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 0.1f);
+                Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 1.5f);
             }
             else
             {
                 // Otherwise change the field of view based on the change in distance between the touches.
-                Camera.main.fieldOfView += deltaMagnitudeDiff * -1.4f;
+                Camera.main.fieldOfView += deltaMagnitudeDiff * -0.2f;
 
                 // Clamp the field of view to make sure it's between 0 and 180.
                 Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 0.1f, 179.9f);
@@ -175,10 +177,10 @@ public class ColorPicker : MonoBehaviour {
 		Debug.Log ("Pixel: (" + x + "," + y + ")");
 		//Get color
 		myColor = image.GetPixel(x,y); 
-		rend.material.mainTexture = image;
+		//rend.material.mainTexture = image;
 
 		Debug.Log ("Pixel RGB: (" + myColor.r * 256 + ", " + myColor.g * 256 + ", " + myColor.b * 256 + ")");
-
+		
         colorInfo.text = "The closest color is " + getColorName(myColor.gamma);
     }
 
