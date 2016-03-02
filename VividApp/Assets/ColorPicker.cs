@@ -143,18 +143,12 @@ public class ColorPicker : MonoBehaviour {
 		WebCamTexture deviceCam = CameraController.deviceCam;
 		int width = deviceCam.width;
 		int height = deviceCam.height;
-//		RenderTexture rTex = new RenderTexture(width, height, 24); 
-//		Cam.targetTexture = rTex;
-//		Cam.Render();
-//		RenderTexture.active = rTex;
-//		Texture2D image = new Texture2D(width, height, TextureFormat.RGB24, false);
-//		// applies active render texture to image
-//		image.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-//		image.Apply(false);
-//        Cam.targetTexture = null;
 
-		Texture2D image = new Texture2D (width, height);	
-		image.SetPixels (deviceCam.GetPixels());
+		RenderTexture rt = new RenderTexture (width, height, 24);
+		Graphics.Blit (GameObject.Find ("Plane").GetComponent<Renderer> ().material.mainTexture, rt);
+		RenderTexture.active = rt;
+		Texture2D image = new Texture2D (width, height);
+		image.ReadPixels(new Rect(0, 0, width, height), 0, 0);
 		image.Apply ();
 
         //Get click position using ray casting
@@ -162,15 +156,8 @@ public class ColorPicker : MonoBehaviour {
         Physics.Raycast(Cam.ScreenPointToRay(Input.mousePosition), out hit);
 		Vector2 pixel = hit.textureCoord2 ;
 
-		// TODO LYNNE: Clean up transformation
-#if UNITY_EDITOR
 		pixel.x *= image.width;
         pixel.y *= image.height;
-#elif UNITY_ANDROID
-		pixel.x *= image.width;
-		pixel.y *= image.height;
-		// rotate pixel coordinates by 90 degrees
-#endif
 
         int x = Mathf.FloorToInt(pixel.x);
         int y = Mathf.FloorToInt(pixel.y);
@@ -181,7 +168,7 @@ public class ColorPicker : MonoBehaviour {
 
 		Debug.Log ("Pixel RGB: (" + myColor.r * 256 + ", " + myColor.g * 256 + ", " + myColor.b * 256 + ")");
 		
-        colorInfo.text = "The closest color is " + getColorName(myColor.gamma);
+		colorInfo.text = "The closest color is " + getColorName(myColor.gamma);
     }
 
     private string getColorName(Color color) {
