@@ -5,13 +5,12 @@ public class wc : MonoBehaviour
 {
 
     WebCamTexture back;
-
+    bool paused = false;
     // Use this for initialization
     void Start()
     {
 
         back = new WebCamTexture();
-
         GetComponent<Renderer>().material.mainTexture = back;
         back.Play();
 
@@ -20,8 +19,7 @@ public class wc : MonoBehaviour
 
    public void pauseFeed()
     {
-        bool paused = false;
-
+ 
         if (paused == false)
         {
             back.Pause();
