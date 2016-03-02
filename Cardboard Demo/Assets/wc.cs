@@ -18,6 +18,21 @@ public class wc : MonoBehaviour
 
     }
 
+   public void pauseFeed()
+    {
+        bool paused = false;
+
+        if (paused == false)
+        {
+            back.Pause();
+            paused = true;
+        }
+        else
+        {
+            back.Play();
+            paused = false;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
