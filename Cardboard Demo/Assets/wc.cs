@@ -19,21 +19,24 @@ public class wc : MonoBehaviour
 
    public void pauseFeed()
     {
- 
-        if (paused == false)
-        {
-            back.Pause();
-            paused = true;
-        }
-        else
-        {
-            back.Play();
-            paused = false;
-        }
+
     }
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            print("Entering Pause");
+            if (paused == false)
+            {
+                back.Pause();
+                paused = true;
+            }
+            else
+            {
+                back.Play();
+                paused = false;
+            }
+        }
     }
 }
