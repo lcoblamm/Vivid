@@ -31,7 +31,12 @@ public class CameraController : MonoBehaviour
 		int correctWidth = deviceCam.width;
 		int correctHeight = deviceCam.height;
 		float newWidth = (float)correctWidth / (float)correctHeight;
+#if UNITY_EDITOR
 		plane.transform.localScale = new Vector3 (newWidth, 1f, 1f);
+#elif UNITY_ANDROID
+		plane.transform.localScale = new Vector3 (newWidth, 1f, 1f);
+		plane.transform.Rotate (new Vector3(0,90,0));
+#endif
 	}
 		
 		// toggles camera on and off

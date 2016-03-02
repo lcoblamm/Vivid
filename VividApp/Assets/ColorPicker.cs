@@ -44,7 +44,7 @@ public class ColorPicker : MonoBehaviour {
         
         //common "reasonable" colors
         new NamedColor("beige", new Vector4(0.96f, 0.96f, 0.86f, 1)),
-        //new NamedColor("tan", new Vector4(0.87f, 0.72f, 0.53f, 1)),
+        new NamedColor("tan", new Vector4(0.87f, 0.72f, 0.53f, 1)),
         new NamedColor("blue violet", new Vector4(0.54f, 0.17f, 0.89f, 1)),
         new NamedColor("brown", new Vector4(0.65f, 0.2f, 0.2f, 1)),
         new NamedColor("pink", new Vector4(1, 0.4f, 0.7f, 1)),
@@ -138,29 +138,40 @@ public class ColorPicker : MonoBehaviour {
 
 		//Takes the texture2D from the Main Camera.
 		Cam = Camera.main;
-		RenderTexture rTex = new RenderTexture(400, 400, 24); //The aspect ratio should match plane's
+		int width = Cam.pixelWidth;
+		int height = Cam.pixelHeight;
+		// TODO Lynne: check on aspect ratio here - should come from camera??
+		RenderTexture rTex = new RenderTexture(400, 400, 24); 
 		Cam.targetTexture = rTex;
 		Cam.Render();
 		RenderTexture.active = rTex;
-		Texture2D image = new Texture2D(Cam.targetTexture.width, Cam.targetTexture.height, TextureFormat.RGB24, false);
-		image.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
+		Texture2D image = new Texture2D(width, height, TextureFormat.RGB24, false);
+		image.ReadPixels(new Rect(0, 0, width, height), 0, 0);
 		image.Apply(false);
         Cam.targetTexture = null;
 
         //Get click position using ray casting
         RaycastHit hit;
         Physics.Raycast(Cam.ScreenPointToRay(Input.mousePosition), out hit);
-        
 		Vector2 pixel = hit.textureCoord2 ;
-	
+
+		// TODO LYNNE: Clean up transformation
+#if UNITY_EDITOR
 		pixel.x *= image.width;
         pixel.y *= image.height;
+#elif UNITY_ANDROID
+		pixel.x *= image.width;
+		pixel.y *= image.height;
+		// rotate pixel coordinates by 90 degrees
+#endif
 
         int x = Mathf.FloorToInt(pixel.x);
         int y = Mathf.FloorToInt(pixel.y);
-
-        //Get color
+		Debug.Log ("Pixel: (" + x + "," + y + ")");
+		//Get color
 		myColor = image.GetPixel(x,y); 
+
+
 		Debug.Log ("Pixel RGB: (" + myColor.r * 256 + ", " + myColor.g * 256 + ", " + myColor.b * 256 + ")");
 
         colorInfo.text = "The closest color is " + getColorName(myColor.gamma);
