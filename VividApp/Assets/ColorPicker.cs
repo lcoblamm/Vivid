@@ -164,7 +164,6 @@ public class ColorPicker : MonoBehaviour {
 		Debug.Log ("Pixel: (" + x + "," + y + ")");
 		//Get color
 		myColor = image.GetPixel(x,y); 
-		//rend.material.mainTexture = image;
 
 		Debug.Log ("Pixel RGB: (" + myColor.r * 256 + ", " + myColor.g * 256 + ", " + myColor.b * 256 + ")");
 		
