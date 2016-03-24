@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Shader"
+﻿Shader "Unlit/RedGreen"
 {
 	Properties
 	{
