@@ -27,6 +27,7 @@ public class ColorPicker : MonoBehaviour {
         }
     };
 
+	// List of color names and corresponding RGB values
     NamedColor[] colorList = {
         //half and full value combinations
         new NamedColor("maroon", new Vector4(0.5f, 0, 0, 1)),
@@ -60,7 +61,6 @@ public class ColorPicker : MonoBehaviour {
         rend = GetComponent<Renderer>();
 		colorInfo.text = "";
 		colorInfo.color = Color.white;
-		
 	}
 
     // Update is called once per frame
@@ -69,8 +69,7 @@ public class ColorPicker : MonoBehaviour {
         Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
 		Vector2 pixel = hit.textureCoord;
 		
-		 // If there are two touches on the device...
-       
+		// Touch device zooming: If there are two touches on the device...
 		if (Input.touchCount == 2)
         {
             // Store both touches.
@@ -120,8 +119,7 @@ public class ColorPicker : MonoBehaviour {
 //			Camera.main.transform.position = new Vector3((pixel.x*5)-2.5f,10,(pixel.y*5)-2.5f);//converting pixels into x,y,z coords for camera position.
 //		}
 
-		// Don't want to detect click if it's on other game object
-
+		// Don't want to detect click if it's on other game object (button, slider, etc)
 #if UNITY_EDITOR
 		if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
 		{
@@ -136,33 +134,37 @@ public class ColorPicker : MonoBehaviour {
     }
 
 	IEnumerator screenGrab() {
+		// pause so we don't get half updated screen
 		yield return new WaitForEndOfFrame();
 
-		//Takes the texture2D from the Main Camera.
+		// get aspect ratio of device camera
 		Cam = Camera.main;
 		WebCamTexture deviceCam = CameraController.deviceCam;
 		int width = deviceCam.width;
 		int height = deviceCam.height;
 
 		RenderTexture rt = new RenderTexture (width, height, 24);
+		// copy image that's on plane to new render texture
 		Graphics.Blit (GameObject.Find ("Plane").GetComponent<Renderer> ().material.mainTexture, rt);
+		// set new render texture as active so we can use readPixels to copy it to a Texture2D
 		RenderTexture.active = rt;
 		Texture2D image = new Texture2D (width, height);
 		image.ReadPixels(new Rect(0, 0, width, height), 0, 0);
 		image.Apply ();
 
-        //Get click position using ray casting
+        // Get click position using ray casting
         RaycastHit hit;
         Physics.Raycast(Cam.ScreenPointToRay(Input.mousePosition), out hit);
 		Vector2 pixel = hit.textureCoord2 ;
 
+		// translate 0 to 1 coordinates to actual coordinates
 		pixel.x *= image.width;
         pixel.y *= image.height;
-
         int x = Mathf.FloorToInt(pixel.x);
         int y = Mathf.FloorToInt(pixel.y);
 		Debug.Log ("Pixel: (" + x + "," + y + ")");
-		//Get color
+
+		// Get pixel from copied image
 		myColor = image.GetPixel(x,y); 
 
 		Debug.Log ("Pixel RGB: (" + myColor.r * 256 + ", " + myColor.g * 256 + ", " + myColor.b * 256 + ")");
