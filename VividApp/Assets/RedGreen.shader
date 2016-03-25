@@ -3,8 +3,9 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_GreenWeight ("Green content in blue component", Range (0,3)) = 2
-		_GreenScaling ("Green Scaling", Range(1,3)) = 2
+		_SliderValue ("Value from 0 to 1 from UI Slider", Range (0,1)) = 0
+		_GreenWeight ("Green content in blue component", Range (0,3)) = 0
+		_GreenScaling ("Green Scaling", Range(1,3)) = 1
 	}
 	SubShader
 	{
@@ -20,6 +21,7 @@
 
 			fixed _GreenWeight;
 			fixed _GreenScaling;
+			fixed _SliderValue;
 
 			struct appdata
 			{
@@ -63,6 +65,8 @@
 				*/
 
 				/* Mapping attempt for deuteranomalous type */
+				_GreenWeight = _SliderValue * 3;
+				_GreenScaling = 1 + _SliderValue * 2;
 				col.b = ((3 - _GreenWeight) * col.b + _GreenWeight * col.g) / 3;
 				col.g = col.g/_GreenScaling;
 				return col;
