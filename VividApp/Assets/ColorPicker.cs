@@ -14,6 +14,8 @@ public class ColorPicker : MonoBehaviour {
 
 	public Text colorInfo;
 
+	startMenu menu = new startMenu () ; 
+
     //Objects
     public Camera Cam ;
 
@@ -26,6 +28,8 @@ public class ColorPicker : MonoBehaviour {
             rgba = v;
         }
     };
+
+	public int shaderState;
 
 	// List of color names and corresponding RGB values
     NamedColor[] colorList = {
@@ -61,6 +65,11 @@ public class ColorPicker : MonoBehaviour {
         rend = GetComponent<Renderer>();
 		colorInfo.text = "";
 		colorInfo.color = Color.white;
+
+		GameObject canv = GameObject.Find("Canvas");
+		startMenu variable = canv.GetComponent<startMenu>();
+
+		shaderState = variable.state; 
 	}
 
     // Update is called once per frame
