@@ -4,7 +4,7 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
-	//Objects
+	// Objects
 	public GameObject plane = null;
 	public static WebCamTexture deviceCam = null;
 	public bool isPicture = false;
