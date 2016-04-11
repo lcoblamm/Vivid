@@ -140,7 +140,7 @@ public class ColorPicker : MonoBehaviour {
 
 		//Takes the texture2D from the Main Camera.
 		Cam = Camera.main;
-		WebCamTexture deviceCam = wc.deviceCam;
+		WebCamTexture deviceCam = wc.back;
 		int width = deviceCam.width;
 		int height = deviceCam.height;
 
