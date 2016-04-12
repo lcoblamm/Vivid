@@ -8,14 +8,11 @@ public class startMenu : MonoBehaviour {
 	public Button BlueYellow ; 
 	public Button None ;
 
-	public int state ; 
-
 	public GameObject menu ;
 	
-
 	// Use this for initialization
 	void Start () {
-	
+
 		//Needed so that state variable will not be lost in the transistion from the start menu into the main scene. 
 		DontDestroyOnLoad(transform.gameObject);
 
@@ -24,7 +21,7 @@ public class startMenu : MonoBehaviour {
 	//Red Green button Selected, set set state to 1, and load main scene.
 	public void RedGreenPress() {
 
-		state = 1 ; 
+		GlobalControl.Instance.state = 1 ; 
 
 		Application.LoadLevel (1); 
 		menu.SetActive (false); 
@@ -33,7 +30,7 @@ public class startMenu : MonoBehaviour {
 	//Blue Yellow button Selected, set set state to 2, and load main scene.
 	public void BlueYellowPress() {
 
-		state = 2 ; 
+		GlobalControl.Instance.state = 2 ; 
 
 		//Load main scene
 		Application.LoadLevel (1); 
@@ -45,7 +42,7 @@ public class startMenu : MonoBehaviour {
 	//No shadder button Selected, set set state to 0, and load main scene.
 	public void NonePress() {
 
-		state = 0 ; 
+		GlobalControl.Instance.state = 0 ; 
 
 		//Load main scene
 		Application.LoadLevel (1); 

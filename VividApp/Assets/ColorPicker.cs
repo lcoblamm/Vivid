@@ -29,7 +29,7 @@ public class ColorPicker : MonoBehaviour {
         }
     };
 
-	public int shaderState;
+	//public int shaderState;
 
 	// List of color names and corresponding RGB values
     NamedColor[] colorList = {
@@ -80,10 +80,9 @@ public class ColorPicker : MonoBehaviour {
 		colorInfo.text = "";
 		colorInfo.color = Color.white;
 
-		GameObject canv = GameObject.Find("Canvas");
-		startMenu variable = canv.GetComponent<startMenu>();
+		//GameObject canv = GameObject.Find("Canvas");
+		//startMenu variable = canv.GetComponent<startMenu>();
 
-		shaderState = variable.state; 
 	}
 
     // Update is called once per frame
