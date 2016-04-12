@@ -69,8 +69,27 @@
 				_GreenScaling = 1 + _SliderValue * 2;
 				col.b = ((3 - _GreenWeight) * col.b + _GreenWeight * col.g) / 3;
 				col.g = col.g/_GreenScaling;
-				return col;
 
+				/* Mapping attempt for tritanopia type: */
+				/*
+				// Convert to RGB to red-yellow-blue
+				fixed4 col_ryb = col;
+				col_ryb[0] = col.a;
+				col_ryb[1] = col.r;
+				col_ryb[2] = col.g + col.b;
+				col_ryb[3] = col.b;
+
+				col_ryb[2] = ((3 - _GreenWeight) * col_ryb[2] + _GreenWeight * col.b) / 3;
+				col_ryb[3] /= _GreenScaling;
+
+				// Convert back
+				col.r = col_ryb[1];
+				col.g = col_ryb[2] - col_ryb[3];
+				col.b = col_ryb[3];
+				*/
+
+
+                return col;
 
 			}
 			ENDCG

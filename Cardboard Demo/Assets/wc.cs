@@ -3,8 +3,7 @@ using System.Collections;
 
 public class wc : MonoBehaviour
 {
-
-    WebCamTexture back;
+	public static WebCamTexture back;
     bool paused = false;
     // Use this for initialization
     void Start()
