@@ -6,6 +6,7 @@
 		_SliderValue ("Value from 0 to 1 from UI Slider", Range (0,1)) = 0
 		_GreenWeight ("Green content in blue component", Range (0,3)) = 0
 		_GreenScaling ("Green Scaling", Range(1,3)) = 1
+		_RedGreenEnabled ("Red green color blindness?", Float) = 0
 	}
 	SubShader
 	{
@@ -22,6 +23,7 @@
 			fixed _GreenWeight;
 			fixed _GreenScaling;
 			fixed _SliderValue;
+			float _RedGreenEnabled;
 
 			struct appdata
 			{
@@ -64,29 +66,30 @@
 				}
 				*/
 
-				/* Mapping attempt for deuteranomalous type */
 				_GreenWeight = _SliderValue * 3;
 				_GreenScaling = 1 + _SliderValue * 2;
-				col.b = ((3 - _GreenWeight) * col.b + _GreenWeight * col.g) / 3;
-				col.g = col.g/_GreenScaling;
 
-				/* Mapping attempt for tritanopia type: */
-				/*
-				// Convert to RGB to red-yellow-blue
-				fixed4 col_ryb = col;
-				col_ryb[0] = col.a;
-				col_ryb[1] = col.r;
-				col_ryb[2] = col.g + col.b;
-				col_ryb[3] = col.b;
+				if (_RedGreenEnabled == 1) {
+					/* Mapping attempt for deuteranomalous type */
+					col.b = ((3 - _GreenWeight) * col.b + _GreenWeight * col.g) / 3;
+					col.g = col.g/_GreenScaling;
+				} else  {
+					/* Mapping attempt for tritanopia type: */
+					// Convert to RGB to red-yellow-blue
+					fixed4 col_ryb = col;
+					col_ryb[0] = col.a;
+					col_ryb[1] = col.r;
+					col_ryb[2] = col.g + col.b;
+					col_ryb[3] = col.b;
 
-				col_ryb[2] = ((3 - _GreenWeight) * col_ryb[2] + _GreenWeight * col.b) / 3;
-				col_ryb[3] /= _GreenScaling;
+					col_ryb[2] = ((3 - _GreenWeight) * col_ryb[2] + _GreenWeight * col_ryb[3]) / 3;
+					col_ryb[3] /= _GreenScaling;
 
-				// Convert back
-				col.r = col_ryb[1];
-				col.g = col_ryb[2] - col_ryb[3];
-				col.b = col_ryb[3];
-				*/
+					// Convert back
+					col.r = col_ryb[1];
+					col.g = col_ryb[2] - col_ryb[3];
+					col.b = col_ryb[3];
+				}
 
 
                 return col;
