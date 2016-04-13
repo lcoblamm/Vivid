@@ -19,10 +19,17 @@ public class ShaderController : MonoBehaviour {
 		}
 	}
 
+	//Menu button pressed.
+	public void MenuPress() {
+		
+		Application.LoadLevel ("Menu");
+	}
+
+
 	public void OnValueChanged(float pos) {
 		sliderPosition = pos;
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
 		rend.material.SetFloat ("_SliderValue", sliderPosition);
