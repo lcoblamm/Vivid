@@ -15,13 +15,16 @@ public class ShaderController : MonoBehaviour {
 		slider = GameObject.Find ("Slider");
 		//If the "None" option was selected in the start menu.
 		if (GlobalControl.Instance.state == 0) {
-			slider.SetActive(false);
+			slider.SetActive (false);
+		} else if (GlobalControl.Instance.state == 1) {
+			rend.material.SetFloat ("_RedGreenEnabled", 1);
+		} else if (GlobalControl.Instance.state == 2) {
+			rend.material.SetFloat ("_RedGreenEnabled", 0);
 		}
 	}
 
 	//Menu button pressed.
 	public void MenuPress() {
-		
 		Application.LoadLevel ("Menu");
 	}
 
