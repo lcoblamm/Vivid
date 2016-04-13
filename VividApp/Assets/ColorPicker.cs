@@ -14,8 +14,6 @@ public class ColorPicker : MonoBehaviour {
 
 	public Text colorInfo;
 
-	startMenu menu = new startMenu () ; 
-
     //Objects
     public Camera Cam ;
 
