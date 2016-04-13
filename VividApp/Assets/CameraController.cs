@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
 	public bool isPicture = false;
 	public Sprite unpressed;
 	public Sprite pressed;
+	public GameObject menuButton ;
 
 	// Setting up device camera to render to game plane
 	public void Start () {
