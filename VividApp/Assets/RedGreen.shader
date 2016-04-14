@@ -4,9 +4,9 @@
 	{
 		_MainTex ("Texture", 2D) = "white" {}
 		_SliderValue ("Value from 0 to 1 from UI Slider", Range (0,1)) = 0
-		_GreenWeight ("Green content in blue component", Range (0,3)) = 0
-		_GreenScaling ("Green Scaling", Range(1,3)) = 1
-		_RedGreenEnabled ("Red green color blindness?", Float) = 0
+		_FilterWeight ("Filter Weight", Range (0,3)) = 0
+		_FilterScaling ("Filter Scaling", Range(1,3)) = 1
+		_FilterType ("Filter Type", Float) = 0
 	}
 	SubShader
 	{
@@ -20,10 +20,10 @@
 			
 			#include "UnityCG.cginc"
 
-			fixed _GreenWeight;
-			fixed _GreenScaling;
+			fixed _FilterWeight;
+			fixed _FilterScaling;
 			fixed _SliderValue;
-			float _RedGreenEnabled;
+			float _FilterType;
 
 			struct appdata
 			{
@@ -66,36 +66,47 @@
 				}
 				*/
 
-				_GreenWeight = _SliderValue * 3;
-				_GreenScaling = 1 + _SliderValue * 2;
+				_FilterWeight = _SliderValue * 3;
+				_FilterScaling = 1 + _SliderValue * 2;
 
-				if (_RedGreenEnabled == 1) {
-					/* Mapping attempt for deuteranomalous type */
-					
-					col.b = ((3 - _GreenWeight) * col.b + _GreenWeight * col.g) / 3;
-					col.g = col.g/_GreenScaling;
-					
-				} else  {
-					/* Mapping attempt for tritanopia type: */
-					// Convert to RGB to red-yellow-blue
+				if (_FilterType == 1) { /* Deuteranopia */
+					col.b = ((3 - _FilterWeight) * col.b + _FilterWeight * col.g) / 3;
+					col.g = col.g/_FilterScaling;
+				} else if (_FilterType == 2) { /* Tritanopia */
+					// Convert RGB -> CMYK
 					fixed r = col.r;
 					fixed g = col.g;
 					fixed b = col.b;
 					fixed k = 1 - max(r, max(g, b));
-
-					//myc (from cmyk) instead of ryb
 					fixed m = (1 - g - k) / (1 - k);
 					fixed y = (1 - b - k) / (1 - k);
 					fixed c = (1 - r - k) / (1 - k);
 
-					y = ((3 - _GreenWeight) * y + _GreenWeight * c) / 3;
-					c /= _GreenScaling;
+					y = ((3 - _FilterWeight) * y + _FilterWeight * c) / 3;
+					c /= _FilterScaling;
 
 					// Convert back
-
 					col.r = (1 - c) * (1 - k);
 					col.g = (1 - m) * (1 - k);
 					col.b = (1 - y) * (1 - k);
+				} else if (_FilterType == 3) { /* High Contrast */
+					fixed r = col.r;
+					fixed g = col.g;
+					fixed b = col.b;
+					if (0.299 * r + 0.587 * g + 0.114 * b > 0.3) {
+						col.r = sqrt(r);
+						col.g = sqrt(g);
+						col.b = sqrt(b);
+					}
+					else {
+						col.r = pow(r, 2);
+						col.g = pow(g, 2);
+						col.b = pow(b, 2);
+					}
+				} else if (_FilterType == 4) { /* Negative */
+					col.r = 1 - col.r;
+					col.g = 1 - col.g;
+					col.b = 1 - col.b;
 				}
 
 
