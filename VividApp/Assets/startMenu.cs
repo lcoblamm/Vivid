@@ -42,7 +42,7 @@ public class startMenu : MonoBehaviour {
 	//No shader button Selected, set set state to 0, and load main scene.
 	public void NonePress() {
 
-		GlobalControl.Instance.state = 0 ; 
+		GlobalControl.Instance.state = 20 ; 
 
 		//Load main scene
 		Application.LoadLevel (1); 
