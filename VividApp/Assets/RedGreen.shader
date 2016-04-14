@@ -71,24 +71,31 @@
 
 				if (_RedGreenEnabled == 1) {
 					/* Mapping attempt for deuteranomalous type */
+					
 					col.b = ((3 - _GreenWeight) * col.b + _GreenWeight * col.g) / 3;
 					col.g = col.g/_GreenScaling;
+					
 				} else  {
 					/* Mapping attempt for tritanopia type: */
 					// Convert to RGB to red-yellow-blue
-					fixed4 col_ryb = col;
-					col_ryb[0] = col.a;
-					col_ryb[1] = col.r;
-					col_ryb[2] = col.g + col.b;
-					col_ryb[3] = col.b;
+					fixed r = col.r;
+					fixed g = col.g;
+					fixed b = col.b;
+					fixed k = 1 - max(r, max(g, b));
 
-					col_ryb[2] = ((3 - _GreenWeight) * col_ryb[2] + _GreenWeight * col_ryb[3]) / 3;
-					col_ryb[3] /= _GreenScaling;
+					//myc (from cmyk) instead of ryb
+					fixed m = (1 - g - k) / (1 - k);
+					fixed y = (1 - b - k) / (1 - k);
+					fixed c = (1 - r - k) / (1 - k);
+
+					y = ((3 - _GreenWeight) * y + _GreenWeight * c) / 3;
+					c /= _GreenScaling;
 
 					// Convert back
-					col.r = col_ryb[1];
-					col.g = col_ryb[2] - col_ryb[3];
-					col.b = col_ryb[3];
+
+					col.r = (1 - c) * (1 - k);
+					col.g = (1 - m) * (1 - k);
+					col.b = (1 - y) * (1 - k);
 				}
 
 
