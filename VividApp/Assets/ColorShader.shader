@@ -63,7 +63,7 @@
 
 
 				/*
-				** NOTE: NUMBERING CONVENTION
+				** NOTE: NUMBERING CONVENTION 
 				** Vision correction / aid:			0-9
 				** Corresponding simulation:		10-19, with the second digit corresponding to the above values
 				** "Fun" shaders:					20+
@@ -74,6 +74,8 @@
 				** 4: Negative						14: (not necessary)
 				**
 				** 20: Hue Shift (in progress)
+				**
+				** NOTE: When adding new value here, add to ModeEnum.cs as well
 				*/
 				if (_FilterType == 1) { /* Deuteranopia correction */
 					col.b = ((3 - _FilterWeight) * col.b + _FilterWeight * col.g) / 3;

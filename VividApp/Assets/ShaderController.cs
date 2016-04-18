@@ -14,10 +14,10 @@ public class ShaderController : MonoBehaviour {
 		rend = GetComponent<Renderer>();
 		slider = GameObject.Find ("Slider");
 		//If the "color picker" or "negative" option was selected in the start menu 
-		if (GlobalControl.Instance.state == 0 || GlobalControl.Instance.state == 4) {
+		if (GlobalControl.Instance.currMode == Mode.ColorPicker || GlobalControl.Instance.currMode == Mode.Negative) {
 			slider.SetActive (false);
 		}
-		rend.material.SetFloat ("_FilterType", GlobalControl.Instance.state);
+		rend.material.SetFloat ("_FilterType", (int)GlobalControl.Instance.currMode);
 	}
 
 	//Menu button pressed.

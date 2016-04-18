@@ -5,7 +5,7 @@ public class GlobalControl : MonoBehaviour
 {
 	public static GlobalControl Instance;
 
-	public int state ; 
+	public Mode currMode ; 
 	
 	void Awake ()   
 	{

@@ -21,7 +21,7 @@ public class startMenu : MonoBehaviour {
 	//Red Green button Selected, set set state to 1, and load main scene.
 	public void RedGreenPress() {
 
-		GlobalControl.Instance.state = 1 ; 
+		GlobalControl.Instance.currMode = Mode.RedGreen ; 
 
 		Application.LoadLevel (1); 
 		menu.SetActive (false); 
@@ -30,7 +30,7 @@ public class startMenu : MonoBehaviour {
 	//Blue Yellow button Selected, set set state to 2, and load main scene.
 	public void BlueYellowPress() {
 
-		GlobalControl.Instance.state = 2 ; 
+		GlobalControl.Instance.currMode = Mode.BlueYellow ; 
 
 		//Load main scene
 		Application.LoadLevel (1); 
@@ -40,7 +40,7 @@ public class startMenu : MonoBehaviour {
 	// High contrast button Selected, set state to 3, and load main scene.
 	public void HighContrastPress() {
 		
-		GlobalControl.Instance.state = 3 ; 
+		GlobalControl.Instance.currMode = Mode.HighContrast ; 
 		
 		//Load main scene
 		Application.LoadLevel (1); 
@@ -50,7 +50,7 @@ public class startMenu : MonoBehaviour {
 	// Negative button Selected, set state to 4, and load main scene.
 	public void NegativePress() {
 		
-		GlobalControl.Instance.state = 4 ; 
+		GlobalControl.Instance.currMode = Mode.Negative ; 
 		
 		//Load main scene
 		Application.LoadLevel (1); 
@@ -58,9 +58,9 @@ public class startMenu : MonoBehaviour {
 	}
 
 	// Deuteranopia simulator button Selected, set state to 11, and load main scene.
-	public void DeuteranopiaSimPress() {
+	public void RedGreenSimPress() {
 		
-		GlobalControl.Instance.state = 11 ; 
+		GlobalControl.Instance.currMode = Mode.RedGreenSim ; 
 		
 		//Load main scene
 		Application.LoadLevel (1); 
@@ -68,9 +68,9 @@ public class startMenu : MonoBehaviour {
 	}
 
 	// Tritanopia simulator button Selected, set state to 12, and load main scene.
-	public void TritanopiaSimPress() {
+	public void BlueYellowSimPress() {
 		
-		GlobalControl.Instance.state = 12 ; 
+		GlobalControl.Instance.currMode = Mode.BlueYellowSim ; 
 		
 		//Load main scene
 		Application.LoadLevel (1); 
@@ -80,7 +80,7 @@ public class startMenu : MonoBehaviour {
 	// Hue shift button selected, set state to 20, and load main scene.
 	public void HueShiftPress() {
 		
-		GlobalControl.Instance.state = 20 ; 
+		GlobalControl.Instance.currMode = Mode.HueShift ; 
 		
 		//Load main scene
 		Application.LoadLevel (1); 
@@ -88,9 +88,9 @@ public class startMenu : MonoBehaviour {
 	}
 
 	// Color picker button Selected, set state to 0, and load main scene.
-	public void RegularPress() {
+	public void ColorPickerPress() {
 
-		GlobalControl.Instance.state = 0 ; 
+		GlobalControl.Instance.currMode = Mode.ColorPicker ; 
 
 		//Load main scene
 		Application.LoadLevel (1); 
