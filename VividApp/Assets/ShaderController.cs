@@ -13,8 +13,8 @@ public class ShaderController : MonoBehaviour {
 	void Start () {
 		rend = GetComponent<Renderer>();
 		slider = GameObject.Find ("Slider");
-		//If the "None" option was selected in the start menu.
-		if (GlobalControl.Instance.state == 0) {
+		//If the "color picker" or "negative" option was selected in the start menu 
+		if (GlobalControl.Instance.state == 0 || GlobalControl.Instance.state == 4) {
 			slider.SetActive (false);
 		} else {
 			rend.material.SetFloat ("_FilterType", GlobalControl.Instance.state);

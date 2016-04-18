@@ -35,14 +35,62 @@ public class startMenu : MonoBehaviour {
 		//Load main scene
 		Application.LoadLevel (1); 
 		menu.SetActive (false); 
-
-
 	}
 
-	//No shader button Selected, set set state to 0, and load main scene.
-	public void NonePress() {
+	// High contrast button Selected, set state to 3, and load main scene.
+	public void HighContrastPress() {
+		
+		GlobalControl.Instance.state = 3 ; 
+		
+		//Load main scene
+		Application.LoadLevel (1); 
+		menu.SetActive (false); 
+	}
 
+	// Negative button Selected, set state to 4, and load main scene.
+	public void NegativePress() {
+		
+		GlobalControl.Instance.state = 4 ; 
+		
+		//Load main scene
+		Application.LoadLevel (1); 
+		menu.SetActive (false); 
+	}
+
+	// Deuteranopia simulator button Selected, set state to 11, and load main scene.
+	public void DeuteranopiaSimPress() {
+		
+		GlobalControl.Instance.state = 11 ; 
+		
+		//Load main scene
+		Application.LoadLevel (1); 
+		menu.SetActive (false); 
+	}
+
+	// Tritanopia simulator button Selected, set state to 12, and load main scene.
+	public void TritanopiaSimPress() {
+		
+		GlobalControl.Instance.state = 12 ; 
+		
+		//Load main scene
+		Application.LoadLevel (1); 
+		menu.SetActive (false); 
+	}
+
+	// Hue shift button selected, set state to 20, and load main scene.
+	public void HueShiftPress() {
+		
 		GlobalControl.Instance.state = 20 ; 
+		
+		//Load main scene
+		Application.LoadLevel (1); 
+		menu.SetActive (false); 
+	}
+
+	// Color picker button Selected, set state to 0, and load main scene.
+	public void RegularPress() {
+
+		GlobalControl.Instance.state = 0 ; 
 
 		//Load main scene
 		Application.LoadLevel (1); 
