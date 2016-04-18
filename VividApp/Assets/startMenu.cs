@@ -4,18 +4,16 @@ using UnityEngine.UI;
 
 public class startMenu : MonoBehaviour {
 
-	public Button RedGreen ;
-	public Button BlueYellow ; 
-	public Button None ;
-
 	public GameObject menu ;
+	public GameObject infoPanel;
 	
 	// Use this for initialization
 	void Start () {
-
-		//Needed so that state variable will not be lost in the transistion from the start menu into the main scene. 
+		// Needed so that state variable will not be lost in the transistion from the start menu into the main scene. 
 		DontDestroyOnLoad(transform.gameObject);
 
+		infoPanel = GameObject.Find ("InfoPanel");
+		infoPanel.SetActive (false);
 	}
 
 	//Red Green button Selected, set set state to 1, and load main scene.
@@ -95,12 +93,18 @@ public class startMenu : MonoBehaviour {
 		//Load main scene
 		Application.LoadLevel (1); 
 		menu.SetActive (false); 
+	}
 
+	public void OpenInfoPanel() {
+		infoPanel.SetActive (true);
+	}
+
+	public void CloseInfoPanel() {
+		infoPanel.SetActive (false);
 	}
 
 	// Update is called once per frame
 	void Update () {
 	
-
 	}
 }
