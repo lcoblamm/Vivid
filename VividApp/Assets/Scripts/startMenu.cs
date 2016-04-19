@@ -6,14 +6,15 @@ public class startMenu : MonoBehaviour {
 
 	public GameObject menu ;
 	public GameObject infoPanel;
+	SceneFader fader;
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log ("In menu start");
 		menu = GameObject.Find ("Canvas");
 		menu.SetActive (true);
 		infoPanel = GameObject.Find ("InfoPanel");
 		infoPanel.SetActive (false);
+		fader = GameObject.FindObjectOfType<SceneFader> ();
 	}
 
 	//Red Green button Selected, set set state to 1, and load main scene.
@@ -74,7 +75,7 @@ public class startMenu : MonoBehaviour {
 
 	private void TransitionToScene() {
 		// Load main scene
-		Application.LoadLevel ("LiveFeed"); 
+		fader.EndScene ("LiveFeed"); 
 	}
 
 	// Update is called once per frame
