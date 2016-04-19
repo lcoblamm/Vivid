@@ -13,6 +13,7 @@ public class ColorPicker : MonoBehaviour {
     public Boolean selected = false;
 
 	public Text colorInfo;
+	public GameObject colorTextBox;
 
     //Objects
     public Camera Cam ;
@@ -74,6 +75,14 @@ public class ColorPicker : MonoBehaviour {
 
     // Use this for initialization
     public void Start () {
+		// disable color info if we're not in color blidness or color picker mode
+		colorTextBox = GameObject.Find ("ColorTextBox");
+		if (GlobalControl.Instance.currMode != Mode.ColorPicker 
+			&& GlobalControl.Instance.currMode != Mode.RedGreen
+			&& GlobalControl.Instance.currMode != Mode.BlueYellow) {
+			colorTextBox.SetActive (false);
+		}
+
         rend = GetComponent<Renderer>();
 		colorInfo.text = "";
 		colorInfo.color = Color.white;
