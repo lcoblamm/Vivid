@@ -6,93 +6,62 @@ public class startMenu : MonoBehaviour {
 
 	public GameObject menu ;
 	public GameObject infoPanel;
-	
+
 	// Use this for initialization
 	void Start () {
-		// Needed so that state variable will not be lost in the transistion from the start menu into the main scene. 
-		DontDestroyOnLoad(transform.gameObject);
-
+		Debug.Log ("In menu start");
+		menu = GameObject.Find ("Canvas");
+		menu.SetActive (true);
 		infoPanel = GameObject.Find ("InfoPanel");
 		infoPanel.SetActive (false);
 	}
 
 	//Red Green button Selected, set set state to 1, and load main scene.
 	public void RedGreenPress() {
-
 		GlobalControl.Instance.currMode = Mode.RedGreen ; 
-
-		Application.LoadLevel (1); 
-		menu.SetActive (false); 
+		TransitionToScene ();
 	}
 
 	//Blue Yellow button Selected, set set state to 2, and load main scene.
 	public void BlueYellowPress() {
-
 		GlobalControl.Instance.currMode = Mode.BlueYellow ; 
-
-		//Load main scene
-		Application.LoadLevel (1); 
-		menu.SetActive (false); 
+		TransitionToScene ();
 	}
 
 	// High contrast button Selected, set state to 3, and load main scene.
 	public void HighContrastPress() {
-		
 		GlobalControl.Instance.currMode = Mode.HighContrast ; 
-		
-		//Load main scene
-		Application.LoadLevel (1); 
-		menu.SetActive (false); 
+		TransitionToScene ();
 	}
 
 	// Negative button Selected, set state to 4, and load main scene.
 	public void NegativePress() {
-		
 		GlobalControl.Instance.currMode = Mode.Negative ; 
-		
-		//Load main scene
-		Application.LoadLevel (1); 
-		menu.SetActive (false); 
+		TransitionToScene ();
 	}
 
 	// Deuteranopia simulator button Selected, set state to 11, and load main scene.
 	public void RedGreenSimPress() {
-		
 		GlobalControl.Instance.currMode = Mode.RedGreenSim ; 
-		
-		//Load main scene
-		Application.LoadLevel (1); 
-		menu.SetActive (false); 
+		TransitionToScene ();
 	}
 
 	// Tritanopia simulator button Selected, set state to 12, and load main scene.
 	public void BlueYellowSimPress() {
-		
 		GlobalControl.Instance.currMode = Mode.BlueYellowSim ; 
-		
-		//Load main scene
-		Application.LoadLevel (1); 
-		menu.SetActive (false); 
+		TransitionToScene ();
 	}
 
 	// Hue shift button selected, set state to 20, and load main scene.
 	public void HueShiftPress() {
-		
 		GlobalControl.Instance.currMode = Mode.HueShift ; 
-		
-		//Load main scene
-		Application.LoadLevel (1); 
-		menu.SetActive (false); 
+		TransitionToScene ();
 	}
 
 	// Color picker button Selected, set state to 0, and load main scene.
 	public void ColorPickerPress() {
-
-		GlobalControl.Instance.currMode = Mode.ColorPicker ; 
-
-		//Load main scene
-		Application.LoadLevel (1); 
-		menu.SetActive (false); 
+		GlobalControl.Instance.currMode = Mode.ColorPicker; 
+		TransitionToScene ();
 	}
 
 	public void OpenInfoPanel() {
@@ -101,6 +70,11 @@ public class startMenu : MonoBehaviour {
 
 	public void CloseInfoPanel() {
 		infoPanel.SetActive (false);
+	}
+
+	private void TransitionToScene() {
+		// Load main scene
+		Application.LoadLevel ("LiveFeed"); 
 	}
 
 	// Update is called once per frame
