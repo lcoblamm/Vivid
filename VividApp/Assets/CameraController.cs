@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
 #endif
 	}
 		
-		// toggles camera on and off
+	// toggles camera on and off
 	public void ToggleCamera() {
 		if (isPicture) {
 			deviceCam.Play();
@@ -53,14 +53,11 @@ public class CameraController : MonoBehaviour
 		}
 	}
 
-	// TODO LYNNE: Possibly remove if we're sticking with raycast workaround
-	public void TakeSnapshot() {
-		Texture2D snap = new Texture2D (deviceCam.width, deviceCam.height);
-		snap.SetPixels (deviceCam.GetPixels());
-		snap.Apply ();
-
-		plane.GetComponent<Renderer>().material.mainTexture = snap;	
+	// function that loads main menu
+	public void ReturnToMenu() {
+		Application.LoadLevel ("Menu");
 	}
+	
 }
 
 
