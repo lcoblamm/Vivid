@@ -3,13 +3,13 @@ using System.Collections;
 
 public class SplashScreenController : MonoBehaviour {
 
-	private SceneFader fader;
+	//private SceneFader fader;
 	private float totalTime;
 	private bool faderCalled = false;
 
 	// Use this for initialization
 	void Start () {
-		fader = GameObject.FindObjectOfType<SceneFader> ();
+		//fader = GameObject.FindObjectOfType<SceneFader> ();
 		totalTime = 0;
 	}
 
@@ -21,10 +21,11 @@ public class SplashScreenController : MonoBehaviour {
 	}
 
 	void End() {
-		if (!faderCalled) {
+		Application.LoadLevel ("Menu");
+		// if (!faderCalled) {
 			// fade scene out and load menu
-			fader.EndScene ("Menu");
-			faderCalled = true;
-		}
+			//fader.EndScene ("Menu");
+			//faderCalled = true;
+		//}
 	}
 }
