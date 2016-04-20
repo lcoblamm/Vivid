@@ -1,31 +1,38 @@
-﻿using UnityEngine;
+﻿// #define FADING
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
 public class SceneFader : MonoBehaviour {
-
 	public Image fadeImg;
-	private float fadeSpeed = 1.0f;
+	public float fadeSpeed = 1.5f;
 
-	private bool sceneStarting = true;
-	private bool sceneEnding = false;
+	private bool sceneStarting;
+	private bool sceneEnding;
 	string nextScene;
 
 	// Use this for initialization
 	void Start () {
+#if FADING
+		sceneStarting = true;
+		sceneEnding = false;
 		// expand image to cover screen and set to black
 		fadeImg.rectTransform.localScale = new Vector2(Screen.width, Screen.height);
 		fadeImg.color = Color.black;
+#endif
 	}
 	
 	// Update is called once per frame
 	void Update () {
+#if FADING
 		if (sceneStarting) {
 			StartScene ();
 		}
 		if (sceneEnding) {
 			EndScene ();
 		}
+#endif
 	}
 
 	// Fade scene in 

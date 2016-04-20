@@ -196,7 +196,6 @@ public class ColorPicker : MonoBehaviour {
 		// Get pixel from copied image
 		myColor = image.GetPixel(x,y); 
 
-		Debug.Log ("Pixel RGB: (" + myColor.r * 256 + ", " + myColor.g * 256 + ", " + myColor.b * 256 + ")");
         Color c1 = image.GetPixel(x - 1, y);
         Color c2 = image.GetPixel(x + 1, y);
         Color c3 = image.GetPixel(x - 1, y - 1);
