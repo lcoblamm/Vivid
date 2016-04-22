@@ -1,4 +1,5 @@
-﻿// #define FADING
+﻿// Uncomment following line to enable fading on scene startup
+#define FADING
 
 using UnityEngine;
 using System.Collections;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 public class SceneFader : MonoBehaviour {
 	public Image fadeImg;
-	public float fadeSpeed = 1.5f;
+	public float fadeSpeed;
 
 	private bool sceneStarting;
 	private bool sceneEnding;
@@ -61,6 +62,7 @@ public class SceneFader : MonoBehaviour {
 		// if fade image is almost black, exit scene
 		if (fadeImg.color.a >= 0.95) {
 			Application.LoadLevel (nextScene);
+			sceneEnding = false;
 		}
 	}
 

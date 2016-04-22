@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Uncomment following line to enable fading on splash screen ending
+// #define FADING
+
+using UnityEngine;
 using System.Collections;
 
 public class SplashScreenController : MonoBehaviour {

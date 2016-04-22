@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Uncomment following line to enable fading on menu scene ending
+// #define FADING
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
