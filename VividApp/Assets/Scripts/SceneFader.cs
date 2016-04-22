@@ -41,7 +41,7 @@ public class SceneFader : MonoBehaviour {
 		FadeToClear ();
 
 		// if fade image is almost clear, set to clear and disable
-		if (fadeImg.color.a <= 0.05) {
+		if (fadeImg.color.a <= 0.2) {
 			fadeImg.color = Color.clear;
 			fadeImg.enabled = false;
 			sceneStarting = false;
@@ -60,7 +60,7 @@ public class SceneFader : MonoBehaviour {
 		FadeToBlack ();
 		
 		// if fade image is almost black, exit scene
-		if (fadeImg.color.a >= 0.95) {
+		if (fadeImg.color.a >= 0.9) {
 			Application.LoadLevel (nextScene);
 			sceneEnding = false;
 		}
