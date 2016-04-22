@@ -41,7 +41,7 @@ public class SceneFader : MonoBehaviour {
 		FadeToClear ();
 
 		// if fade image is almost clear, set to clear and disable
-		if (fadeImg.color.a <= 0.2) {
+		if (fadeImg.color.a <= 0.15) {
 			fadeImg.color = Color.clear;
 			fadeImg.enabled = false;
 			sceneStarting = false;
