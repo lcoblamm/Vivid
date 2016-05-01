@@ -23,9 +23,8 @@ public class wc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+   /*     if (Input.GetMouseButtonDown(0))
         {
-            print("Entering Pause");
             if (paused == false)
             {
                 back.Pause();
@@ -36,6 +35,6 @@ public class wc : MonoBehaviour
                 back.Play();
                 paused = false;
             }
-        }
+        }*/
     }
 }

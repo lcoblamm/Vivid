@@ -7,6 +7,7 @@ public class ShaderController : MonoBehaviour {
 
 	public float sliderPosition;
 	public Renderer rend;
+	bool shaded = false;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +32,18 @@ public class ShaderController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-			rend.material.SetFloat ("_SliderValue", sliderPosition);
-
+		if (Input.GetMouseButtonDown(0))
+        {
+            if (shaded == false)
+            {
+                rend.material.SetFloat ("_SliderValue", sliderPosition);
+                shaded = true;
+            }
+            else
+            {
+                rend.material.SetFloat ("_SliderValue", 0);
+                shaded = false;
+            }
+        }
 	}
 }
