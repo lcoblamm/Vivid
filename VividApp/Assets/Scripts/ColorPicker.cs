@@ -97,58 +97,7 @@ public class ColorPicker : MonoBehaviour {
 		RaycastHit hit;
         Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
 		Vector2 pixel = hit.textureCoord;
-		
-		// Touch device zooming: If there are two touches on the device...
-		if (Input.touchCount == 2)
-        {
-            // Store both touches.
-            Touch touchZero = Input.GetTouch(0);
-            Touch touchOne = Input.GetTouch(1);
 
-            // Find the position in the previous frame of each touch.
-            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-            // Find the magnitude of the vector (the distance) between the touches in each frame.
-            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-            float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
-
-            // Find the difference in the distances between each frame.
-            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
-
-            // If the camera is orthographic...
-            if (Camera.main.orthographic)
-            {
-                // ... change the orthographic size based on the change in distance between the touches.
-                Camera.main.orthographicSize += deltaMagnitudeDiff * -0.2f;
-
-                // Make sure the orthographic size never drops below zero.
-                Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 1.5f);
-            }
-            else
-            {
-                // Otherwise change the field of view based on the change in distance between the touches.
-                Camera.main.fieldOfView += deltaMagnitudeDiff * -0.2f;
-
-                // Clamp the field of view to make sure it's between 0 and 180.
-                Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 0.1f, 179.9f);
-            }
-        }
-
-		// MOUSE WHEEL ZOOM
-//		if (Input.GetAxis("Mouse ScrollWheel") > 0 // zoom forward wheel 
-//			&& Camera.main.fieldOfView > 2.6f) // makes sure you don't zoom too far in, creates errors
-//		{
-//			Camera.main.fieldOfView = Camera.main.fieldOfView-5;
-//			Camera.main.transform.position = new Vector3((pixel.x*7.5f)-3.5f,10,(pixel.y*7.5f)-3.5f); //converting pixels into x,y,z coords for camera position.
-//		}
-//		if (Input.GetAxis("Mouse ScrollWheel") < 0) // zoom backwards wheel
-//		{
-//			Camera.main.fieldOfView = Camera.main.fieldOfView+5;
-//			Camera.main.transform.position = new Vector3((pixel.x*5)-2.5f,10,(pixel.y*5)-2.5f);//converting pixels into x,y,z coords for camera position.
-//		}
-
-		// Don't want to detect click if it's on other game object (button, slider, etc)
 #if UNITY_EDITOR
 		if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
 		{
